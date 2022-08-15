@@ -1,1 +1,1 @@
-# spark3-scala-training
+spark3-scala-essentials training
