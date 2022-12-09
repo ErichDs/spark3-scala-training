@@ -98,6 +98,6 @@ object Aggregations extends App {
       avg("IMDB_Rating").as("Avg_IMDB_Rating"),
       avg("US_Gross").as("Avg_US_Gross")
     )
-    .orderBy("Avg_IMDB_Rating")
+    .orderBy($"Avg_IMDB_Rating".desc_nulls_last)
     .show()
 }
