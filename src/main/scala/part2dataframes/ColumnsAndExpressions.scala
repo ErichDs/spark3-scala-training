@@ -84,4 +84,33 @@ object ColumnsAndExpressions extends App {
   val allCountriesDF = carsDF.select("Origin").distinct()
   allCountriesDF.show()
 
+  /***
+   * Exercises
+   *
+   * 1. Read the movies DF and select 2 columns of your choice
+   * 2. Create another column summing up total profit of the movies = US_Gross + Worldwide_Gross + US_DVD_Sales
+   * 3. Select all the COMEDY (Major_Genre) movies with IMDB rating above 6.
+   *
+   * Use as many versions as possible
+   */
+
+  // 1.
+  val moviesDF = spark.read
+    .option("inferSchema", "true")
+    .json("src/main/resources/data/movies.json")
+
+  moviesDF.select("Title", "Release_Date").show()
+
+  // 2.
+  moviesDF
+    .withColumn("total_gross_profit", $"US_Gross" + $"Worldwide_Gross" + $"US_DVD_Sales")
+    .select(
+      col("Title"),
+      col("total_gross_profit"))
+    .show()
+
+  // 3.
+  moviesDF
+    .filter($"IMDB_Rating" > 6 and $"Major_Genre" === "Comedy")
+    .show()
 }
